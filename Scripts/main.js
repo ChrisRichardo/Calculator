@@ -1,3 +1,5 @@
+
+
 function add(a,b){
     return a + b;
 }
@@ -32,9 +34,14 @@ function operate(op,a,b){
     }
 }
 
+function getNumber(op){
+    let temp = input.replace(/([^0-9])/g,' ');
+    console.log(temp);
+}
+
 let input = '';
 let display = document.querySelector('#display');
-let buttons = document.querySelectorAll('button');
+let buttons = document.querySelectorAll('.col button');
 Array.from(buttons).forEach(button => {
     button.addEventListener('click',function(e){
         if(button.className === 'clr') {
@@ -43,6 +50,10 @@ Array.from(buttons).forEach(button => {
         else{
             input += button.className;
         }
-        display.value = input;
+        if(button.id === 'op'){
+            getNumber(button.id);
+        }
+        display.innerHTML = input;
+        console.log(input);
     });
 });
