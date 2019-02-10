@@ -9,41 +9,47 @@
 </head>
 <body>
     <div id="calculator">
-        <div id='display'></div>
-        <div id="buttons">
-            <div class="first col">
-                <button class="7">7</button>
-                <button class="4">4</button>
-                <button class="1">1</button>
-                <button class=".">.</button>
+        <div id="centerCalculator">
+            <div class="container">
+                <div id='display'></div>
+                <div id='result'></div>
             </div>
-            <div class="second col">
-                <button class="8">8</button>
-                <button class="5">5</button>
-                <button class="2">2</button>
-                <button class="0">0</button>
-            </div>
-            <div class="third col">
-                <button class="9">9</button>
-                <button class="6">6</button>
-                <button class="3">3</button>
-                <button class="=">=</button>
-            </div>
-            <div class="fourth col">
-                <button class="+" id='op'>+</button>
-                <button class="-" id='op'>-</button>
-                <button class="*" id='op'>*</button>
-                <button class="/" id='op'>/</button>
-                
-            </div>
-            <div class="fifth col">
-                <button class="clr">C</button>
-                <button class="backspace"><-</button>
-                <button class=""></button>
-                <button class=""></button>
+            <div id="buttons">
+                <div class="first col">
+                    <button key-code='55' class="7">7</button>
+                    <button key-code='52' class="4">4</button>
+                    <button key-code='49' class="1">1</button>
+                    <button key-code='190' class=".">.</button>
+                </div>
+                <div class="second col">
+                    <button key-code='56' class="8">8</button>
+                    <button key-code='53' class="5">5</button>
+                    <button key-code='50' class="2">2</button>
+                    <button key-code='48' class="0">0</button>
+                </div>
+                <div class="third col">
+                    <button key-code='57' class="9">9</button>
+                    <button key-code='54' class="6">6</button>
+                    <button key-code='51' class="3">3</button>
+                    <button key-code='13' class="=">=</button>
+                </div>
+                <div class="fourth col">
+                    <button key-code='107' class="+" id='op'>+</button>
+                    <button key-code='109' class="-" id='op'>-</button>
+                    <button key-code='106' class="*" id='op'>*</button>
+                    <button key-code='111' class="/" id='op'>/</button>
+                    
+                </div>
+                <div class="fifth col">
+                    <button class="clr">C</button>
+                    <button key-code='8' class="backspace"><-</button>
+                </div>
             </div>
         </div>
     </div>
+    <footer>
+        Made by : Christopher Richardo
+    </footer>
 </body>
 <script src="Scripts/main.js"></script>
 </html>

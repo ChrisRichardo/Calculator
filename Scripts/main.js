@@ -77,53 +77,169 @@ function calculate(){
 }
 
 let opBool = false;
+let calculated = false;
 let input = '';
+let result = document.querySelector('#result');
 let display = document.querySelector('#display');
 let buttons = document.querySelectorAll('.col button');
 Array.from(buttons).forEach(button => {
     button.addEventListener('click',function(e){
         if(button.id === 'op'){
-            if(opBool && arr.length === 0){
-                    return;
+            if(calculated){
+                input = result.innerHTML;
+                result.innerHTML = '';
+                calculated = false;
             }
-            opBool = true;
+            if(input.length === 0) return;
+            if(input.charAt(input.length-1) === '.' || input.charAt(input.length-1) === '-' || input.charAt(input.length-1) === '+' || input.charAt(input.length-1) === '*' || input.charAt(input.length-1) === '/'){
+                return;
+            }
             input += button.className;
         }
         else if(button.className === 'clr') {
-            opBool = false;
+            if(calculated){
+                result.innerHTML = '';
+                calculated = false;
+            }
             input = '';
             arr =[];
         }
         else if(button.className === '.'){
+            let tempBool = true;
+            if(calculated){
+                input = result.innerHTML;
+                result.innerHTML = '';
+                calculated = false;
+            }
             for(a = input.length-1;a >= 0;a--){
                 if(input.charAt(a) == '*'||input.charAt(a) === '+'||input.charAt(a) === '/'||input.charAt(a) === '-'||input.charAt(a) === '='){
                     break;
                 }
                 if(input.charAt(a) === '.'){
-                    return;
+                    tempBool = false;
+                    break;
                 }
             }
-            input += button.className;
+            if(tempBool) input += button.className;
         }
         else if(button.className === 'backspace'){
             if(input === '') return;
+            if(calculated){
+                input = result.innerHTML;
+                result.innerHTML = '';
+                calculated = false;
+            }
             input = input.substr(0,input.length-1);
         }
         else if(button.className === '='){
-            if(opBool){
+            if(calculated) return;
+            if(input === '') return;
+            if(input.charAt(input.length-1) === '.' || input.charAt(input.length-1) === '-' || input.charAt(input.length-1) === '+' || input.charAt(input.length-1) === '*' || input.charAt(input.length-1) === '/'){
                 return;
             }
+            calculated = true;
             input += '=';
             getNumbers();
-            opBool = true;
-            input = calculate().toString();
+            result.innerHTML = calculate().toString();
         }
         else{
-            opBool = false;
+            if(calculated){
+                input = result.innerHTML;
+                result.innerHTML = '';
+                calculated = false;
+            }
             input += button.className;
         } 
-        display.innerHTML = input;
+        let temp = '';
+        for(a = 0;a < input.length;a++){
+            if(input.charAt(a) === '=') break;
+            temp += input.charAt(a);
+        }
+        display.innerHTML = temp;
     });
 });
 
-//window.addEventListener('keydown')
+window.addEventListener('keydown',function(e){
+    let key = document.querySelector(`button[key-code="${e.keyCode}"]`);
+    if(e.keyCode === 188 || e.keyCode === 46) key = document.querySelector(`button[key-code="190"]`);
+    else if(e.keyCode === 187) key = document.querySelector(`button[key-code="107"]`);
+    else if(e.keyCode === 189) key = document.querySelector(`button[key-code="109"]`);
+    else if(e.keyCode === 191) key = document.querySelector(`button[key-code="111"]`);
+    if(key === null) return;
+
+    console.log(key.className);
+
+    if(key.id === 'op'){
+        if(calculated){
+            input = result.innerHTML;
+            result.innerHTML = '';
+            calculated = false;
+        }
+        if(input.length === 0) return;
+        if(input.charAt(input.length-1) === '.' || input.charAt(input.length-1) === '-' || input.charAt(input.length-1) === '+' || input.charAt(input.length-1) === '*' || input.charAt(input.length-1) === '/'){
+            return;
+        }
+        input += key.className;
+    }
+    else if(key.className === 'clr') {
+        if(calculated){
+            result.innerHTML = '';
+            calculated = false;
+        }
+        input = '';
+        arr =[];
+    }
+    else if(key.className === '.'){
+        let tempBool = true;
+        if(calculated){
+            input = result.innerHTML;
+            result.innerHTML = '';
+            calculated = false;
+        }
+        for(a = input.length-1;a >= 0;a--){
+            if(input.charAt(a) == '*'||input.charAt(a) === '+'||input.charAt(a) === '/'||input.charAt(a) === '-'||input.charAt(a) === '='){
+                break;
+            }
+            if(input.charAt(a) === '.'){
+                tempBool = false;
+                break;
+            }
+        }
+        if(tempBool) input += key.className;
+    }
+    else if(key.className === 'backspace'){
+        if(input === '') return;
+        if(calculated){
+            input = result.innerHTML;
+            result.innerHTML = '';
+            calculated = false;
+        }
+        input = input.substr(0,input.length-1);
+    }
+    else if(key.className === '='){
+        if(calculated) return;
+        if(input === '') return;
+        if(input.charAt(input.length-1) === '.' || input.charAt(input.length-1) === '-' || input.charAt(input.length-1) === '+' || input.charAt(input.length-1) === '*' || input.charAt(input.length-1) === '/'){
+            return;
+        }
+        calculated = true;
+        input += '=';
+        getNumbers();
+        result.innerHTML = calculate().toString();
+    }
+    else{
+        if(calculated){
+            input = result.innerHTML;
+            result.innerHTML = '';
+            calculated = false;
+        }
+        input += key.className;
+    } 
+    let temp = '';
+    for(a = 0;a < input.length;a++){
+        if(input.charAt(a) === '=') break;
+        temp += input.charAt(a);
+    }
+    display.innerHTML = temp;
+
+})
